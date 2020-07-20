@@ -1,0 +1,34 @@
+name: Build Android and iOS
+on:
+  push:
+    branches:
+      - master
+jobs:
+  install-and-test:
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v2
+      - name: Install npm dependencies
+        run: |
+          npm install
+  build-ios:
+    needs: install-and-test
+    runs-on: [self-hosted, macos]
+    steps: 
+      - uses: actions/checkout@v2
+      - name: Install npm dependencies
+        run: |
+          npm install
+      - name: Install pod dependencies
+        run: |
+          cd ios && pod install
+      - name: Build app
+        run: |       
+          sudo xcodebuild -workspace imageID.xcworkspace -scheme imageID archive -archivePath imageID.xcarchive -allowProvisioningUpdates
+          sudo xcodebuild -exportArchive -archivePath ./imageID.xcarchive -exportPath . -exportOptionsPlist imageID/Info.plist
+          mv imageID.ipa ../imageID.ipa
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: imageID.ipa
+          path: ios/build/
