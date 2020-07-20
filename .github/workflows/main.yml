@@ -23,6 +23,7 @@ jobs:
         run: |
           cd ios
       - name: Install pod
+        run: |
           pod install
       - name: Build app
         run: |       
