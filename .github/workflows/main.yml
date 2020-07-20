@@ -21,7 +21,8 @@ jobs:
           npm install
       - name: Install pod dependencies
         run: |
-          cd ios && pod install
+          cd ios
+          pod install
       - name: Build app
         run: |       
           xcodebuild -workspace testing_project.xcworkspace -scheme testing_project archive -archivePath testing_project.xcarchive -allowProvisioningUpdates
@@ -30,5 +31,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
-          name: imageID.ipa
+          name: testing_project.ipa
           path: ios/build/
