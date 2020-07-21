@@ -21,10 +21,9 @@ jobs:
           npm install
       - name: Install pod dependencies
         run: |
-          cd ios
-      - name: Install pod
-        run: |
-          pod install
+          cd ios && pod install
+      - name: Dump file hirearchy
+        run: ls -R
       - name: Build app
         run: |       
           xcodebuild -workspace testing_project.xcworkspace -scheme testing_project archive -archivePath testing_project.xcarchive -allowProvisioningUpdates
