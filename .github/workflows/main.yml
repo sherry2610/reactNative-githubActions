@@ -29,9 +29,9 @@ jobs:
       - name: Xcode version
         run: /usr/bin/xcodebuild -version
       - name: Build archive
-	run: |
-	  xcodebuild -sdk iphoneos -project testing_project/testing_project.xcodeproj \
-	    -configuration Release -scheme testing_project \
+        run: |
+          xcodebuild -sdk iphoneos -project testing_project/testing_project.xcodeproj \
+            -configuration Release -scheme testing_project \
             -derivedDataPath DerivedData \
             -archivePath DerivedData/Archive/testing_project archive
       - name: Export Archive
