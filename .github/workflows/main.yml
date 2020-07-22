@@ -13,7 +13,7 @@ jobs:
           npm install
   build-ios:
     needs: install-and-test
-    runs-on: macOS-latest
+    runs-on: macos-latest
     steps: 
       - uses: actions/checkout@v2
       - name: Install npm dependencies
@@ -22,23 +22,11 @@ jobs:
       - name: Install pod dependencies
         run: |
           cd ios && pod install
-      - name: Dump file hirearchy
-        run: ls -R
-      - name: Select Xcode
-        run: sudo xcode-select -switch /Applications/Xcode_11.3.app
-      - name: Xcode version
-        run: /usr/bin/xcodebuild -version
-      - name: Build archive
+      - name: Build app
         run: |
-          xcodebuild -sdk iphoneos -project testing_project/testing_project.xcodeproj \
-            -configuration Release -scheme testing_project \
-            -derivedDataPath DerivedData \
-            -archivePath DerivedData/Archive/testing_project archive
-      - name: Export Archive
-        run: |
-          xcodebuild -exportArchive \
-            -archivePath DerivedData/Archive/testing_project.xcarchive \
-            -exportPat DerivedData/ipa 
+          ls       
+          xcodebuild -workspace testing_project.xcworkspace -scheme testing_project archive -archivePath testing_project.xcarchive -allowProvisioningUpdates
+          mv testing_project.ipa ../testing_project.ipa
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
