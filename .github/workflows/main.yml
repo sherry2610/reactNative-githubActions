@@ -25,7 +25,8 @@ jobs:
       - name: Build app
         run: |
           ls       
-          xcodebuild -workspace testing_project.xcworkspace -scheme testing_project archive -archivePath testing_project.xcarchive -allowProvisioningUpdates
+          xcodebuild -workspace ./ios/testing_project.xcworkspace -scheme testing_project archive -archivePath ./ios/testing_project.xcarchive -allowProvisioningUpdates
+          xcodebuild -exportArchive -archivePath ./ios/testing_project.xcarchive -exportPath . -exportOptionsPlist testing_project/Info.plist
           mv testing_project.ipa ../testing_project.ipa
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
